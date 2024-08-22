@@ -17,23 +17,21 @@ public abstract class UmbracoIntegrationTestWithContentEditing : UmbracoIntegrat
 
     protected ITemplateService TemplateService => GetRequiredService<ITemplateService>();
 
-    private ContentEditingService ContentEditingService =>
-        (ContentEditingService)GetRequiredService<IContentEditingService>();
+    private ContentEditingService ContentEditingService => (ContentEditingService)GetRequiredService<IContentEditingService>();
 
-    private ContentPublishingService ContentPublishingService =>
-        (ContentPublishingService)GetRequiredService<IContentPublishingService>();
-
+    private ContentPublishingService ContentPublishingService => (ContentPublishingService)GetRequiredService<IContentPublishingService>();
 
     protected ContentCreateModel Subpage2 { get; private set; }
+
     protected ContentCreateModel Subpage3 { get; private set; }
 
     protected ContentCreateModel PublishedTextPage { get; private set; }
 
     protected ContentCreateModel Textpage { get; private set; }
 
-    protected ContentScheduleCollection contentSchedule { get; private set; }
+    protected ContentScheduleCollection ContentSchedule { get; private set; }
 
-    protected CultureAndScheduleModel cultureAndSchedule { get; private set; }
+    protected CultureAndScheduleModel CultureAndSchedule { get; private set; }
 
     protected int TextpageId { get; private set; }
 
@@ -80,10 +78,10 @@ public abstract class UmbracoIntegrationTestWithContentEditing : UmbracoIntegrat
         }
 
         // Sets the culture and schedule for the content, in this case, we are publishing immediately for all cultures
-        contentSchedule = new ContentScheduleCollection();
-        cultureAndSchedule = new CultureAndScheduleModel
+        ContentSchedule = new ContentScheduleCollection();
+        CultureAndSchedule = new CultureAndScheduleModel
         {
-            CulturesToPublishImmediately = new HashSet<string> { "*" }, Schedules = contentSchedule,
+            CulturesToPublishImmediately = new HashSet<string> { "*" }, Schedules = ContentSchedule,
         };
 
         // Create and Save Content "Text Page 1" based on "umbTextpage" -> 1054
@@ -101,7 +99,7 @@ public abstract class UmbracoIntegrationTestWithContentEditing : UmbracoIntegrat
             PublishedTextPageId = createContentResultSubPage.Result.Content.Id;
         }
 
-        await ContentPublishingService.PublishAsync(PublishedTextPage.Key.Value, cultureAndSchedule, Constants.Security.SuperUserKey);
+        await ContentPublishingService.PublishAsync(PublishedTextPage.Key.Value, CultureAndSchedule, Constants.Security.SuperUserKey);
 
         // Create and Save Content "Text Page 1" based on "umbTextpage" -> 1055
         Subpage2 = ContentEditingBuilder.CreateSimpleContent(ContentType, "Text Page 2", Textpage.Key);
