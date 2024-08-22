@@ -27,7 +27,7 @@ public abstract class UmbracoIntegrationTestWithContentEditing : UmbracoIntegrat
     protected ContentCreateModel Subpage2 { get; private set; }
     protected ContentCreateModel Subpage3 { get; private set; }
 
-    protected ContentCreateModel Subpage { get; private set; }
+    protected ContentCreateModel PublishedTextPage { get; private set; }
 
     protected ContentCreateModel Textpage { get; private set; }
 
@@ -37,7 +37,7 @@ public abstract class UmbracoIntegrationTestWithContentEditing : UmbracoIntegrat
 
     protected int TextpageId { get; private set; }
 
-    protected int SubpageId { get; private set; }
+    protected int PublishedTextPageId { get; private set; }
 
     protected int Subpage2Id { get; private set; }
 
@@ -87,21 +87,21 @@ public abstract class UmbracoIntegrationTestWithContentEditing : UmbracoIntegrat
         };
 
         // Create and Save Content "Text Page 1" based on "umbTextpage" -> 1054
-        Subpage = ContentEditingBuilder.CreateSimpleContent(ContentType, "Text Page 1", Textpage.Key);
-        var createContentResultSubPage = await ContentEditingService.CreateAsync(Subpage, Constants.Security.SuperUserKey);
+        PublishedTextPage = ContentEditingBuilder.CreateSimpleContent(ContentType, "Text Page 1");
+        var createContentResultSubPage = await ContentEditingService.CreateAsync(PublishedTextPage, Constants.Security.SuperUserKey);
         Assert.IsTrue(createContentResultSubPage.Success);
 
-        if (!Subpage.Key.HasValue)
+        if (!PublishedTextPage.Key.HasValue)
         {
             throw new InvalidOperationException("The content page key is null.");
         }
 
         if (createContentResultSubPage.Result.Content != null)
         {
-            SubpageId = createContentResultSubPage.Result.Content.Id;
+            PublishedTextPageId = createContentResultSubPage.Result.Content.Id;
         }
 
-        await ContentPublishingService.PublishAsync(Subpage.Key.Value, cultureAndSchedule, Constants.Security.SuperUserKey);
+        await ContentPublishingService.PublishAsync(PublishedTextPage.Key.Value, cultureAndSchedule, Constants.Security.SuperUserKey);
 
         // Create and Save Content "Text Page 1" based on "umbTextpage" -> 1055
         Subpage2 = ContentEditingBuilder.CreateSimpleContent(ContentType, "Text Page 2", Textpage.Key);
