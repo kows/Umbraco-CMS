@@ -28,7 +28,6 @@ public class ContentHybridCacheTests : UmbracoIntegrationTestWithContentEditing
     private const string NewName = "New Name";
     private const string NewTitle = "New Title";
 
-
     // Missing
     // Cultures, Scope Rollback, More property tests with element cache level & element
     // Create CRUD Tests for Content, Also cultures.
@@ -450,12 +449,14 @@ public class ContentHybridCacheTests : UmbracoIntegrationTestWithContentEditing
     public async Task Can_Not_Get_Deleted_Content_By_Id()
     {
         // Arrange
-        var content = await PublishedContentHybridCache.GetByIdAsync(Subpage3Id, true);
+        var content = await PublishedContentHybridCache.GetByIdAsync(Subpage1Id, true);
         Assert.IsNotNull(content);
-        await ContentEditingService.DeleteAsync(Subpage3.Key.Value, Constants.Security.SuperUserKey);
+        await ContentEditingService.DeleteAsync(Subpage1.Key.Value, Constants.Security.SuperUserKey);
 
         // Act
-        var textPage = await PublishedContentHybridCache.GetByIdAsync(Subpage3Id, true);
+        var textPagePublishedContent = await PublishedContentHybridCache.GetByIdAsync(Subpage1Id, false);
+
+        var textPage = await PublishedContentHybridCache.GetByIdAsync(Subpage1Id, true);
 
         // Assert
         Assert.IsNull(textPage);
@@ -465,13 +466,13 @@ public class ContentHybridCacheTests : UmbracoIntegrationTestWithContentEditing
     public async Task Can_Not_Get_Deleted_Content_By_Key()
     {
         // Arrange
-        await PublishedContentHybridCache.GetByIdAsync(Subpage3.Key.Value, true);
-        var hasContent = await PublishedContentHybridCache.HasByIdAsync(Subpage3Id, true);
+        await PublishedContentHybridCache.GetByIdAsync(Subpage1.Key.Value, true);
+        var hasContent = await PublishedContentHybridCache.HasByIdAsync(Subpage1Id, true);
         Assert.IsTrue(hasContent);
-        var result = await ContentEditingService.DeleteAsync(Subpage3.Key.Value, Constants.Security.SuperUserKey);
+        var result = await ContentEditingService.DeleteAsync(Subpage1.Key.Value, Constants.Security.SuperUserKey);
 
         // Act
-        var textPage = await PublishedContentHybridCache.GetByIdAsync(Subpage3.Key.Value, true);
+        var textPage = await PublishedContentHybridCache.GetByIdAsync(Subpage1.Key.Value, true);
 
         // Assert
         Assert.IsNull(textPage);
