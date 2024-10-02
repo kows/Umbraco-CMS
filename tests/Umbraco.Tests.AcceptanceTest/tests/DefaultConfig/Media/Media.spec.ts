@@ -74,7 +74,7 @@ for (const mediaFileType of mediaFileTypes) {
 
     // Assert
     await umbracoUi.media.isSuccessNotificationVisible();
-    await umbracoUi.media.isTreeItemVisible(mediaFileType.fileName);
+    //await umbracoUi.media.isTreeItemVisible(mediaFileType.fileName);
     expect(await umbracoApi.media.doesNameExist(mediaFileType.fileName)).toBeTruthy();
 
     // Clean

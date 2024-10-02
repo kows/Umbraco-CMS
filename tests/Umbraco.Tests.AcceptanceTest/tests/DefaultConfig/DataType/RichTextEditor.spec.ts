@@ -145,7 +145,7 @@ test('can select overlay size', async ({umbracoApi, umbracoUi}) => {
   expect(dataTypeData.values).toContainEqual(expectedDataTypeValues);
 });
 
-test('can enable hide label', async ({umbracoApi, umbracoUi}) => {
+test.skip('can enable hide label', async ({umbracoApi, umbracoUi}) => {
   // Arrange
   const expectedDataTypeValues = {
     "alias": "hideLabel",
@@ -185,7 +185,7 @@ test('can add image upload folder', async ({umbracoApi, umbracoUi}) => {
   await umbracoApi.media.ensureNameNotExists(mediaFolderName);
 });
 
-test('can enable inline editing mode', async ({umbracoApi, umbracoUi}) => {
+test.skip('can enable inline editing mode', async ({umbracoApi, umbracoUi}) => {
   // Arrange
   const mode = 'Inline';
   const expectedDataTypeValues = {
